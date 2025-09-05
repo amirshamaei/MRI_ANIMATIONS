@@ -1,4 +1,10 @@
-# 3D Bloch Equation Animation for MRI
+# MRI Animations for Education
+
+This is a free and open access repository for animations for MRI education. For now I added Bloch equation simulation. Feel free to update it. Contact me: shamaie.amir@gmail.com
+
+## Current Animations
+
+### 3D Bloch Equation Simulation
 
 This project provides a detailed 3D visualization of the Bloch Equations, which are fundamental to understanding Magnetic Resonance Imaging (MRI). The animation is created using the [Manim Community](https://www.manim.community/) Python animation engine.
 
