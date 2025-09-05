@@ -26,6 +26,7 @@ from manim import (
     Write,
     Transform,
     FadeOut,
+    FadeIn,
     # Constants
     WHITE,
     RED,
@@ -143,8 +144,8 @@ class ImprovedBlochEquation(ThreeDScene):
         )
         
         # Start slow camera rotation that continues for the whole animation
-        rotation_rate = 0.05  # Slow rotation for better visualization
-        self.begin_ambient_camera_rotation(rate=rotation_rate)
+        # rotation_rate = 0.05  # Slow rotation for better visualization
+        # self.begin_ambient_camera_rotation(rate=rotation_rate)
         
         # Store objects for later use
         self.axes = axes
@@ -208,8 +209,13 @@ class ImprovedBlochEquation(ThreeDScene):
         new_status.to_edge(LEFT, buff=0.5).shift(UP * 2)
         
         runtime = 0.1 if self.testing_mode else 0.5
-        self.play(Transform(self.status_text, new_status), runtime=runtime)
         
+        self.play(FadeOut(self.status_text, shift=UP*0.5), runtime=runtime/2)
+        self.remove_fixed_in_frame_mobjects(self.status_text)
+        self.status_text = new_status
+        self.add_fixed_in_frame_mobjects(self.status_text)
+        self.play(FadeIn(self.status_text, shift=UP*0.5), runtime=runtime/2)
+
         # Create RF field representation - increased length for better visibility
         rf_arrow = Arrow3D(
             start=[0, 0, 0],
@@ -234,6 +240,9 @@ class ImprovedBlochEquation(ThreeDScene):
         )
         
         runtime = 0.3 if self.testing_mode else 1.5
+        
+        # Animate the camera tilt and magnetization rotation simultaneously
+        self.move_camera(phi=60 * DEGREES, run_time=runtime)
         self.play(
             Transform(self.magnetization, new_magnetization),
             FadeOut(rf_arrow),
@@ -251,7 +260,15 @@ class ImprovedBlochEquation(ThreeDScene):
         new_status.to_edge(LEFT, buff=0.5).shift(UP * 2)
         
         runtime = 0.1 if self.testing_mode else 0.5
-        self.play(Transform(self.status_text, new_status), runtime=runtime)
+        
+        self.play(FadeOut(self.status_text, shift=UP*0.5), runtime=runtime/2)
+        self.remove_fixed_in_frame_mobjects(self.status_text)
+        self.status_text = new_status
+        self.add_fixed_in_frame_mobjects(self.status_text)
+        self.play(FadeIn(self.status_text, shift=UP*0.5), runtime=runtime/2)
+
+        # Animate the camera panning during the relaxation
+        self.move_camera(theta=-165 * DEGREES, run_time=1.5)
 
         # Physics-based relaxation matching RF pulse time
         total_time = 0.3 if self.testing_mode else 1.5
@@ -367,7 +384,12 @@ class ImprovedBlochEquation(ThreeDScene):
         final_status.to_edge(LEFT, buff=0.5).shift(UP * 2)
         
         runtime = 0.2 if self.testing_mode else 1
-        self.play(Transform(self.status_text, final_status), runtime=runtime)
+        
+        self.play(FadeOut(self.status_text, shift=UP*0.5), runtime=runtime/2)
+        self.remove_fixed_in_frame_mobjects(self.status_text)
+        self.status_text = final_status
+        self.add_fixed_in_frame_mobjects(self.status_text)
+        self.play(FadeIn(self.status_text, shift=UP*0.5), runtime=runtime/2)
         
         # Key physics summary - fixed to camera with improved font
         # summary_text = Text(
