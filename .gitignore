@@ -1,0 +1,30 @@
+# Virtual environment
+venv/
+env/
+.env
+
+# Media files (Manim output)
+media/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Manim cache
+.manim_cache/
+
+# Log files
+*.log
